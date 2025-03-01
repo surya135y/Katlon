@@ -1,0 +1,36 @@
+package customKeywords
+
+import com.kms.katalon.core.annotation.Keyword
+import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
+import org.openqa.selenium.WebElement
+import org.openqa.selenium.support.ui.Select
+import com.kms.katalon.core.testobject.TestObject
+
+class DropdownHelper {
+
+    @Keyword
+    def printSortedDropdownOptions(TestObject dropdownObject, String order) {
+        // Find the dropdown WebElement
+        WebElement dropdownElement = WebUI.findWebElement(dropdownObject, 10)
+        
+        // Create a Select object
+        Select dropdown = new Select(dropdownElement)
+        
+        // Get all options and store them in a list
+        List<String> optionsList = dropdown.getOptions().collect { it.getText() }
+        
+        // Sort the list based on order (ascending or descending)
+        if (order.toLowerCase() == "ascending") {
+            optionsList.sort()
+        } else if (order.toLowerCase() == "descending") {
+            optionsList.sort(Collections.reverseOrder())
+        } else {
+            println("Invalid sorting order! Use 'ascending' or 'descending'.")
+            return
+        }
+
+        // Print sorted options
+        println("Dropdown Options in ${order} order:")
+        optionsList.each { println(it) }
+    }
+}
