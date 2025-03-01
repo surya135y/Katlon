@@ -1,0 +1,61 @@
+package customKeywords
+
+import com.kms.katalon.core.annotation.Keyword
+import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
+import org.openqa.selenium.WebElement
+import org.openqa.selenium.support.ui.Select
+import com.kms.katalon.core.testobject.TestObject
+import java.io.FileInputStream
+import org.apache.poi.xssf.usermodel.XSSFWorkbook
+import org.apache.poi.ss.usermodel.*
+
+class DropdownHelper {
+
+    @Keyword
+    def verifyDropdownWithUserList(TestObject dropdownObject, List<String> userList, boolean skipFirst) {
+        // Step 1: Find the dropdown WebElement
+        WebElement dropdownElement = WebUI.findWebElement(dropdownObject, 10)
+        
+        // Step 2: Create a Select object
+        Select dropdown = new Select(dropdownElement)
+        
+        // Step 3: Get all options as a list of text values
+        List<String> actualOptions = dropdown.getOptions().collect { it.getText() }
+        
+        // Step 4: Skip first value if needed
+        if (skipFirst && actualOptions.size() > 1) {
+            actualOptions = actualOptions.subList(1, actualOptions.size())
+        }
+
+        // Step 5: Print both lists
+        println("Actual Dropdown Options: " + actualOptions)
+        println("User-Defined Expected List: " + userList)
+
+        // Step 6: Compare actual list with expected user list
+        if (actualOptions == userList) {
+            println("✅ Dropdown matches the expected list.")
+        } else {
+            println("❌ Dropdown does NOT match the expected list.")
+        }
+    }
+
+    @Keyword
+    def getUserListFromExcel(String excelFilePath, String sheetName) {
+        FileInputStream fis = new FileInputStream(excelFilePath)
+        XSSFWorkbook workbook = new XSSFWorkbook(fis)
+        Sheet sheet = workbook.getSheet(sheetName)
+        List<String> userList = []
+
+        // Read each row from the first column
+        for (Row row : sheet) {
+            Cell cell = row.getCell(0)
+            if (cell != null) {
+                userList.add(cell.getStringCellValue().trim())
+            }
+        }
+
+        workbook.close()
+        fis.close()
+        return userList
+    }
+}
