@@ -1,0 +1,46 @@
+package customKeywords
+
+import com.kms.katalon.core.annotation.Keyword
+import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
+import org.openqa.selenium.WebElement
+import org.openqa.selenium.support.ui.Select
+import com.kms.katalon.core.testobject.TestObject
+
+class DropdownHelper {
+
+    @Keyword
+    def verifyDropdownOrderSkippingFirst(TestObject dropdownObject) {
+        // Step 1: Find the dropdown WebElement
+        WebElement dropdownElement = WebUI.findWebElement(dropdownObject, 10)
+        
+        // Step 2: Create a Select object
+        Select dropdown = new Select(dropdownElement)
+        
+        // Step 3: Get all options as a list of text values and skip the first value
+        List<String> actualOptions = dropdown.getOptions().collect { it.getText() }
+        if (actualOptions.size() > 1) {
+            actualOptions = actualOptions.subList(1, actualOptions.size()) // Skip first value
+        } else {
+            println("⚠️ Not enough options in the dropdown to verify order.")
+            return
+        }
+
+        // Step 4: Create sorted copies for comparison
+        List<String> ascendingOrder = new ArrayList<>(actualOptions)
+        List<String> descendingOrder = new ArrayList<>(actualOptions)
+
+        ascendingOrder.sort() // Sort in ascending
+        descendingOrder.sort(Collections.reverseOrder()) // Sort in descending
+
+        // Step 5: Compare actual list with sorted lists
+        println("Actual Dropdown Options (Skipping First Value): " + actualOptions)
+
+        if (actualOptions == ascendingOrder) {
+            println("✅ Dropdown options (excluding first value) are in Ascending Order.")
+        } else if (actualOptions == descendingOrder) {
+            println("✅ Dropdown options (excluding first value) are in Descending Order.")
+        } else {
+            println("❌ Dropdown options (excluding first value) are NOT in any order.")
+        }
+    }
+}
