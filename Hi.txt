@@ -1,0 +1,57 @@
+import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
+import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
+import org.openqa.selenium.WebElement
+
+// Open Browser and Navigate to Application
+WebUI.openBrowser('')
+WebUI.navigateToUrl('https://your-application-url.com')
+
+// Get All Dropdown Options
+TestObject dropdown = findTestObject('Object Repository/RegionDropdown')
+List<WebElement> options = WebUI.findWebElements(dropdown, 10)
+
+// Policy Number to Search
+String policyNumber = '123456'
+
+for (WebElement option : options) {
+    String selectedRegion = option.getText().trim()
+    
+    // Select Region from Dropdown
+    WebUI.selectOptionByLabel(dropdown, selectedRegion, false)
+    WebUI.comment("Selected Region: " + selectedRegion)
+    
+    // Enter Policy Number in Search Field
+    WebUI.setText(findTestObject('Object Repository/SearchField'), policyNumber)
+
+    // Click on Search Button
+    WebUI.click(findTestObject('Object Repository/SearchButton'))
+
+    // Wait for Possible Search Results or Error Popup
+    boolean isResultVisible = WebUI.waitForElementVisible(findTestObject('Object Repository/SearchResultsTable'), 5, FailureHandling.OPTIONAL)
+    boolean isPopupVisible = WebUI.waitForElementVisible(findTestObject('Object Repository/NoResultsPopup'), 5, FailureHandling.OPTIONAL)
+
+    if (isPopupVisible) {
+        WebUI.comment("No Results Found for Region: " + selectedRegion)
+        WebUI.verifyElementText(findTestObject('Object Repository/NoResultsPopup'), 'Sorry, no results found. Please try another keyword.')
+    } else if (isResultVisible) {
+        WebUI.comment("Results Found for Region: " + selectedRegion)
+
+        // Verify Results Match Selected Region (except 'All')
+        if (selectedRegion != 'All') {
+            List<WebElement> regionElements = WebUI.findWebElements(findTestObject('Object Repository/RegionColumn'), 10)
+            boolean allMatchesRegion = regionElements.every { it.getText().trim() == selectedRegion }
+            
+            if (!allMatchesRegion) {
+                WebUI.comment("Error: Some results belong to a different region!")
+                assert false // Fail test if incorrect regions are fetched
+            } else {
+                WebUI.comment("Test Passed: All results belong to the selected region.")
+            }
+        }
+    } else {
+        WebUI.comment("Unexpected issue: No results found and no popup appeared!")
+    }
+}
+
+// Close Browser
+WebUI.closeBrowser()
