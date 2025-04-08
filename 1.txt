@@ -1,0 +1,9 @@
+Feature: Blocked country validation in MyTrip Policy Edit
+
+  Scenario: User is notified when selecting a blocked destination country during policy edit
+    Given the user is on the MyTrip Policy Edit page
+    And the user navigates to the Trip Details section
+    When the user selects "Cuba" or "N. Korea" as the destination country
+    And the user attempts to save the policy
+    Then a validation message should appear below the destination country field
+    And the policy changes should not be saved
