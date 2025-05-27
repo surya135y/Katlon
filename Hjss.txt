@@ -1,0 +1,16 @@
+1. Verify "Edited" label and check icon appear when any section is edited – "Edited" label with check icon is displayed before the edit link.
+
+
+2. Verify "Edited" label is displayed before the edit link after making changes – "Edited" label appears directly before the edit link after saving changes.
+
+
+3. Verify no "Edited" label is shown if no changes are made to the section – No "Edited" label or icon is displayed if the section remains unchanged.
+
+
+4. Verify check icon appears next to the "Edited" label after editing a section – Check icon is visible next to the "Edited" label.
+
+
+5. Verify position of "Edited" label is always before the edit link – "Edited" label and icon are placed immediately before the edit link in the UI.
+
+
+6. Verify "Edited" label is removed if changes are reverted and saved – "Edited" label and icon disappear if original content is restored and saved.
