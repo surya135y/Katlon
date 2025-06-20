@@ -1,0 +1,186 @@
+Sure! Below are additional test cases that complement the main functionality, including UI, UX, edge cases, and validations. These cover form usability, data integrity, and interactivity:
+
+
+---
+
+Test Case 8: Validate Required Field Behavior on Save
+
+Step: Leave required fields (Flight Date, Airline, Flight Number) empty and click Save Flight
+Expected Result:
+
+All required fields show validation messages
+
+Flight Date → “Flight date is required”
+
+Airline → “Airline is required”
+
+Flight Number → “Flight number is required”
+
+
+
+
+---
+
+Test Case 9: Validate Date Format Enforcement
+
+Step: Manually enter an incorrect date format (e.g., 20-06-2025)
+Expected Result:
+
+System shows validation error: "Invalid date format. Use mm/dd/yyyy"
+
+User cannot proceed without correct format
+
+
+
+---
+
+Test Case 10: Validate Autocomplete for Airline Field
+
+Step: Start typing a valid airline name (e.g., "Delta")
+Expected Result:
+
+Autocomplete suggestions appear
+
+Selecting a suggestion fills the field
+
+Field cannot be manually submitted with an invalid airline name
+
+
+
+---
+
+Test Case 11: Validate Flight Number Format
+
+Step: Enter alphabetic characters or special symbols in Flight Number
+Expected Result:
+
+Validation message: "Invalid flight number format"
+
+Only numeric input is allowed
+
+
+
+---
+
+Test Case 12: Departure → Arrival Auto-fill Logic
+
+Step: Enter a valid airline and flight number, then check the dropdown
+Expected Result:
+
+Field automatically populates with available legs (e.g., “JFK → LAX”)
+
+User can select a segment from the dropdown
+
+
+
+---
+
+Test Case 13: Remove Flight from Tile
+
+Step: Click Remove Flight on an existing tile
+Expected Result:
+
+The tile is removed from the page
+
+Flight is no longer included in the policy
+
+
+
+---
+
+Test Case 14: Validate Max Flight Count Enforcement UI
+
+Step: Add 10 flights
+Expected Result:
+
+Add Another Flight link or form is disabled or hidden
+
+Clicking Add Another Flight shows error: "Maximum 10 flights allowed"
+
+
+
+---
+
+Test Case 15: UI - Button Visibility
+
+Step: Observe layout and button positions on desktop and mobile
+Expected Result:
+
+Save Flight button appears just below form
+
+Save Policy button appears at bottom of page
+
+Buttons are responsive and visible across viewports
+
+
+
+---
+
+Test Case 16: Reset Blank Form on Add Another Flight
+
+Step: Click Add Another Flight after entering a flight
+Expected Result:
+
+A new blank form appears
+
+Previous data is cleared
+
+Ready for new flight input
+
+
+
+---
+
+Test Case 17: Duplicate Flight Number Check
+
+Step: Add the same flight number twice
+Expected Result:
+
+System may allow or warn (depends on requirements)
+
+If not allowed: "This flight has already been added"
+
+
+
+---
+
+Test Case 18: Validate Multiple Segment Flight
+
+Step: Enter a flight with multiple legs (e.g., via connections)
+Expected Result:
+
+Dropdown should show all legs
+
+User can select any segment
+
+
+
+---
+
+Test Case 19: Navigation Without Saving
+
+Step: Enter flight data, then navigate away without clicking Save Flight
+Expected Result:
+
+Prompt message: "You have unsaved changes. Do you want to continue?"
+
+
+
+---
+
+Test Case 20: Accessibility – Keyboard Navigation
+
+Step: Try completing the form using only keyboard (Tab, Enter)
+Expected Result:
+
+All fields are reachable
+
+Calendar picker is keyboard accessible
+
+Form can be completed and submitted without mouse
+
+
+
+---
+
+Would you like these compiled into a test case matrix in Excel or Google Sheets format?
