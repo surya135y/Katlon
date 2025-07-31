@@ -1,0 +1,10 @@
+Step	Action	Expected Result
+1	Navigate to the Claims Portal homepage.	Homepage loads successfully.
+2	Click the “Terms & Conditions” link, usually found in the website footer or menu.	Terms & Conditions page loads.
+3	Scroll down or locate the "Fraud Warning" section on the page.	The "Fraud Warning" section is visible and clearly labeled.
+4	Verify the section title reads “Fraud Warning”.	Section title exactly displays “Fraud Warning”.
+5	Verify that the disclaimer/message under "Fraud Warning" matches the newly provided text exactly.	The message content matches the latest, approved "Fraud Warning" text as provided.
+6	Check for formatting (font, size, spacing) per website standards.	Section formatting is consistent with other legal text on the page.
+7	Confirm that no outdated or duplicate "Fraud Warning" text appears elsewhere on the page.	No old or duplicate versions of the warning are present anywhere on the page.
+8	Test on multiple browsers (e.g., Chrome, Firefox, Edge, Safari).	The section displays correctly and consistently across all tested browsers.
+9	Test on mobile device/browser.	The "Fraud Warning" section displays correctly and is readable on mobile.
