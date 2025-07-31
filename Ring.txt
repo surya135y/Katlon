@@ -1,0 +1,72 @@
+Create the testcase steps 
+with expected result in future tense 
+
+As HTTP Marketing, I need the navigation styling to be updated so that all pages have a consistent
+look and feel that reflects our brand standards.
+Requirements
+1. All fonts, font sizes, and colors need to be consistent with the BHTP style guide.
+a.Link to style guide
+2. The top navigation bar background color lisupdated to Brand Darkest Blue(#182A54).
+3. The active state color for selected items ih Ae side navigation bar must be updated to Brand
+Bright Blue(#0070B9).
+4. Icons in the navigation bar will be updated to the following:
+a. Dashboard
+i. 2 Material Symbols ana icons -Google Fonts
+b. Quotes
+i.* Material Symbols and'fcons-Google Fonts
+c. Policies
+i.2 Material Symbols and Icons - Google Fonts
+
+Here are the **test case steps with expected results written in future tense** based on your requirements for the updated navigation styling:
+
+### ✅ **Test Case 1: Verify Font, Font Sizes, and Colors Match Style Guide**
+
+**Precondition:** Style guide is available and accessible.
+
+#### **Steps:**
+1. Navigate to any page on the website.
+2. Inspect headings, body text, and navigation labels.
+3. Compare fonts, font sizes, and colors against the BHTP style guide.
+
+#### **Expected Result:**
+The font family, font sizes, and font colors **will match** the specifications defined in the BHTP style guide across all pages and components.
+
+### ✅ **Test Case 2: Verify Top Navigation Bar Background Color**
+
+**Precondition:** User is logged in and can access the top navigation bar.
+
+#### **Steps:**
+1. Navigate to any page on the site.
+2. Observe the top navigation bar.
+
+#### **Expected Result:**
+The background color of the top navigation bar **will display** the Brand Darkest Blue (#182A54) consistently on every page.
+
+### ✅ **Test Case 3: Verify Active State Color in Side Navigation Bar**
+
+**Precondition:** Side navigation bar is present on the page.
+
+#### **Steps:**
+1. Click on each navigation item in the side menu (e.g. Dashboard, Quotes, Policies).
+2. Observe the active (selected) link highlighted.
+
+#### **Expected Result:**
+The active navigation item **will be highlighted** in Brand Bright Blue (#0070B9) to reflect it as selected.
+
+### ✅ **Test Case 4: Verify Updated Icons in Navigation Bar**
+
+**Precondition:** Icons must be sourced from Material Symbols and Icons — Google Fonts.
+
+#### **Steps:**
+1. Navigate to a page with the navigation bar.
+2. Verify the icon next to the “Dashboard” menu item.
+3. Verify the icon next to the “Quotes” menu item.
+4. Verify the icon next to the “Policies” menu item.
+
+#### **Expected Result:**
+- The “Dashboard” icon **will match** the assigned Material Symbols icon as specified.
+- The “Quotes” icon **will match** the assigned Material Symbols icon.
+- The “Policies” icon **will match** the assigned Material Symbols icon.
+- All icons **will render** clearly and consistently with equal spacing and alignment.
+
+Let me know if you’d like these test cases exported into a formal test case document format (e.g., Excel, TestRail, etc.).
