@@ -1,0 +1,246 @@
+Test cases — New plans + recommender changes
+
+Below are focused, ready-to-run test cases (ID, purpose, preconditions, steps, test data, expected result, priority). Run in a test environment where you can control plan metadata (description, rating IDs) and user zip/state. I made reasonable assumptions for sample test data (change if your environment uses different IDs or flows).
+
+
+---
+
+TC-01: Partner Portal — New plans appear in plan list
+
+Purpose: Verify Partner Portal displays the new plans appended to existing plans, with same description and sort order.
+Preconditions: Test account logged into Partner Portal; test environment contains existing plans + new plans added to DB: ECLPD, ECV4, EC4, ECE5, LUX4, ADC4, WAVE5.
+Steps:
+
+1. Login to Partner Portal as partner user.
+
+
+2. Navigate to Plans page / Product catalog where plans are listed.
+
+
+3. Observe plan list and sort order.
+Test data: none special.
+Expected result: The plan list includes, in appropriate position, the new plans ECLPD, ECV4, EC4, ECE5, LUX4, ADC4, WAVE5. ECLPD displays with the description exactly: EMERGENCY MEDICAL & EVACUATION PLAN. Plans are appended/present without changing existing plan descriptions or order. No duplicates.
+Priority: High
+
+
+
+
+---
+
+TC-02: Buy Site — New plans appear in buy flow
+
+Purpose: Verify Buy Site shows the same new plans (same descriptions and order) to customers.
+Preconditions: New plans deployed to Buy Site environment.
+Steps:
+
+1. Open Buy Site as customer (public site).
+
+
+2. Start a product selection or plan listing page.
+
+
+3. Check plan names, descriptions, and ordering.
+Test data: none.
+Expected result: The Buy Site shows ECLPD, ECV4, EC4, ECE5, LUX4, ADC4, WAVE5 with the same descriptions as Partner Portal. ECLPD description exactly: EMERGENCY MEDICAL & EVACUATION PLAN. Sort order matches the defined order.
+Priority: High
+
+
+
+
+---
+
+TC-03: Verify ECLPD description text
+
+Purpose: Confirm the description for ECLPD is correct everywhere.
+Preconditions: Plans available in DB/UI.
+Steps:
+
+1. Query the plan ECLPD in backend (API or DB) — fetch description field.
+
+
+2. Visit UI (both Partner Portal and Buy Site) where ECLPD is displayed and read description.
+Test data: none.
+Expected result: Backend description = EMERGENCY MEDICAL & EVACUATION PLAN. UI displays exactly the same text (case and punctuation).
+Priority: High
+
+
+
+
+---
+
+TC-04: Product recommender uses Rating IDs to select visible plans
+
+Purpose: Verify recommender logic selects plans based on Rating IDs.
+Preconditions: Ability to update rating ID mappings for plans in test DB or admin console. Test user profile available.
+Steps:
+
+1. In admin, assign Rating IDs such that only a subset of plans are allowed for a test rating (e.g., RatingID = 50 => allowed plans EC4, LUX4, ECLPD).
+
+
+2. Trigger the recommender (complete questionnaire or call recommender API) for a test profile that yields RatingID = 50.
+
+
+3. Capture recommender output (top N recommended plans).
+Test data: RatingID mapping: 50 -> EC4, LUX4, ECLPD.
+Expected result: Recommender returns plans filtered by the Rating ID mapping; only plans with that Rating ID are shown. No plans outside the mapping appear.
+Pass criteria: Recommender source of truth is Rating ID; evidence via logs or API response shows filtering by Rating ID.
+Priority: High
+
+
+
+
+---
+
+TC-05: Replace Value plan with Exact Care Lite in top 3 recommendations
+
+Purpose: Ensure the Value plan is replaced by Exact Care Lite (ECLPD) in top 3 recommended products.
+Preconditions: System before-change scenario where Value plan appears in top 3 for some user; recommender updated.
+Steps:
+
+1. Use a test profile that previously returned Value plan in top 3. (If needed, set rating IDs or user attributes to reproduce prior behavior.)
+
+
+2. Run recommender.
+
+
+3. Inspect top 3 recommended plans.
+Test data: profile that previously had Value in top 3.
+Expected result: Value does not appear in top 3. Instead the top 3 contain ExactCare (EC4), LuxuryCare (LUX4), and ExactCare Lite (ECLPD) (order may be verified in next TC). ExactCare Lite must be present and have correct plan code ECLPD.
+Priority: High
+
+
+
+
+---
+
+TC-06: New recommended plans order and content
+
+Purpose: Validate the exact top-3 recommendation order:
+
+1. ExactCare - EC4
+
+
+2. LuxuryCare - LUX4
+
+
+3. ExactCare Lite - ECLPD
+Preconditions: Recommender is updated to enforce the new top-3 rule.
+Steps:
+
+
+4. Use a test profile that triggers general recommendations (same as business scenario).
+
+
+5. Run recommender and capture top-3 list.
+Test data: Use same profile/data as business expects to be recommended these products.
+Expected result: Top 3 are exactly in the order: EC4, LUX4, ECLPD. Their display names should match (ExactCare, LuxuryCare, ExactCare Lite).
+Priority: High
+
+
+
+
+---
+
+TC-07: Enhanced products unaffected — NY zip loads enhanced product
+
+Purpose: Ensure enhanced-product flow is not broken by changes; test using NY zip code.
+Preconditions: There exists an enhanced product available for NY zip (e.g., zip 10001).
+Steps:
+
+1. On Buy Site, enter zip 10001 (NY).
+
+
+2. Run the product load flow (search/select plans).
+
+
+3. Confirm enhanced product is still presented according to existing rules.
+Test data: Zip = 10001 (NY).
+Expected result: The enhanced product(s) for NY load/display as before. Recommender and plan display for enhanced products are unchanged. No missing/enabled flags incorrectly set.
+Priority: Medium
+
+
+
+
+---
+
+TC-08: California removed from enhanced recommendations
+
+Purpose: Verify CA zip codes no longer return enhanced recommendations.
+Preconditions: Enhanced recommendations used to include CA; change applied to remove CA.
+Steps:
+
+1. Set zip to 90001 (CA) on Buy Site or recommender flow.
+
+
+2. Trigger product selection/recommender.
+
+
+3. Inspect whether any enhanced products are offered.
+Test data: Zip = 90001 (Los Angeles, CA).
+Expected result: Enhanced products that previously appeared for CA are NOT shown. System shows standard recommendations only (or shows an explicit message that enhanced recommendations are not available). No errors.
+Priority: Medium
+
+
+
+
+---
+
+TC-09: UI & sorting parity check between Partner Portal and Buy Site
+
+Purpose: Ensure both front-ends present same plan sort order, labels, and descriptions.
+Preconditions: Both sites show plan lists from same data source.
+Steps:
+
+1. Open Partner Portal plans list; capture order and text for all plans.
+
+
+2. Open Buy Site plans list; capture order and text for all plans.
+
+
+3. Compare side-by-side.
+Expected result: Plan order and description text are identical across both sites for all plans including new ones.
+Priority: Medium
+
+
+
+
+---
+
+TC-10: Negative test — Missing/duplicate plan handling
+
+Purpose: Confirm system behavior when a plan is missing or duplicated in backend.
+Preconditions: Introduce a deliberate duplicate plan code OR temporarily remove EC4 from DB (test only in controlled environment).
+Steps:
+
+1. Case A: Duplicate LUX4 entry in DB. Run plan listing and recommender.
+
+
+2. Case B: Remove EC4 from DB and run recommender for a profile that should receive EC4.
+Expected result:
+
+
+
+Case A: UI should not show duplicate entries (system dedupes) or shows one entry and logs/alerts admin.
+
+Case B: Recommender should gracefully skip EC4, choose next best alternative, and a monitoring alert/log entry should be created for missing data. No crash.
+Priority: Low
+
+
+
+---
+
+Notes / Test artifacts to capture
+
+For each test capture: API responses, screenshots of UI (Partner & Buy), backend DB query results or admin console screenshots showing Rating ID mappings, and server logs for recommender decisions.
+
+Where recommender logic is validated, include request/response payloads showing which Rating ID was used and why a plan was included/excluded.
+
+Zip codes used in acceptance testing: NY 10001, CA 90001 (modify to match your test dataset).
+
+Acceptance criteria: All high-priority tests must pass. No UI text mismatches for plan names/descriptions. Recommender must filter by Rating ID and place ExactCare Lite in top 3 as required.
+
+
+
+---
+
+If you want, I can convert this into a test-case table (CSV / Excel) you can import into your test management tool — tell me which columns you prefer and I’ll produce the file.
