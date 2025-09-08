@@ -1,0 +1,75 @@
+Description
+As the Business Intelligence team, I need a system-versioned table and supporting objects for
+association data created in Warehouseone. So that we can store, update, verify, and access
+association records for reporting and cross-system yalidation
+Requirements:
+1.A new system-versioned table named Associations should be created in the
+WarehouseOne.bhtpsf schema to store accounts with a a record type of "Associated" and
+"Consortium" A view named Associations should be created in the WarehouseOne.dbo schema
+2. A stored procedure should be created to update the WarehouseOne.bhtpsf.Associations table
+with new or modified records
+3. A stored procedure should be created to verify the data in the
+WarehouseOne.bhtpsf.Associations table for accuracy and completeness
+4. A synonym should be created in the Informationmart staging schema pointing to
+WarehouseOne.dbo.Associations to enable cross-schema access.
+
+create the testcase with with expected result
+
+Here are test cases with expected results for the system-versioned "Associations" table and its supporting objects, ensuring storage, update, verification, and access as per your BI requirements[1][2][3][4][5][6].
+
+## System-Versioned Table Creation: Associations
+
+**Test Case 1: Table Structure Validation**
+- Action: Query table metadata to verify columns, data types, primary key, and PERIOD FOR SYSTEM_TIME declaration.
+- Expected Result: Table `WarehouseOne.bhtpsf.Associations` has all required columns, a primary key, and two datetime2 columns for system time (start, end)[1][7].
+
+**Test Case 2: System Versioning History**
+- Action: Insert, update, and delete records; verify that changes appear both in the base and history tables.
+- Expected Result: Historical data for every change is stored in the history table, and current data is in the base table[1][8].
+
+## View Creation: dbo.Associations
+
+**Test Case 3: View Data Validation**
+- Action: Query WarehouseOne.dbo.Associations view and compare results to `bhtpsf.Associations` table.
+- Expected Result: The view returns all records for accounts of type "Associated" or "Consortium" with up-to-date values.
+
+## Stored Procedure for Update
+
+**Test Case 4: New Record Insert**
+- Action: Execute update procedure with a new association record.
+- Expected Result: New record is inserted into `WarehouseOne.bhtpsf.Associations`, and its system time values are initialized accordingly[9][3].
+
+**Test Case 5: Record Update**
+- Action: Execute update procedure with modifications for an existing association.
+- Expected Result: The current record is updated, and the previous version appears in the history table with correct system time values.
+
+## Stored Procedure for Verification
+
+**Test Case 6: Data Accuracy Check**
+- Action: Execute verification procedure; check output or logs.
+- Expected Result: Procedure reports any records with missing mandatory fields, invalid types, or failed constraints; otherwise, returns success[4][2].
+
+**Test Case 7: Completeness Validation**
+- Action: Delete a required field value and run verification.
+- Expected Result: Procedure identifies missing data and flags the specific row/column[2][4].
+
+## Synonym Creation for Cross-Schema Access
+
+**Test Case 8: Synonym Access Validation**
+- Action: Query the synonym in the staging schema as if accessing the view.
+- Expected Result: Results match those of WarehouseOne.dbo.Associations, confirming synonym enables proper cross-schema access.
+
+***
+
+## Table Format Example
+
+| Test Case                   | Action                                        | Expected Result                                                                         |
+|-----------------------------|-----------------------------------------------|-----------------------------------------------------------------------------------------|
+| Table Structure Validation  | Query metadata                                | Columns, PK, SYSTEM_TIME fields present and correctly defined [1]                   |
+| System Versioning History   | Insert/update/delete and check history table  | Changes are tracked, history table shows previous versions [8]                      |
+| View Data Validation        | Query view and compare with table             | View returns correct and current "Associated"/"Consortium" records                      |
+| New Record Insert           | SP: Insert new record                         | New record added, correct SYSTEM_TIME values                                            |
+| Record Update               | SP: Update record                             | Old version in history, base updated                                                    |
+| Data Accuracy Check         | Run verification SP                           | All data valid or errors reported for missing/wrong fields [4]                     |
+| Completeness Validation     | Remove required field and verify              | SP flags missing/completeness errors                                                    |
+| Synonym Access Validation   | Query synonym in staging schema               | Data is accessible as expected, matches view output                                     |
