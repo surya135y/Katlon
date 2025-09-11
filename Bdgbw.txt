@@ -1,0 +1,36 @@
+# Travel Insurance Purchase Flow Diagram
+
+Based on the screenshots you provided, I've created a flow diagram that illustrates the travel insurance purchase process. The workflow consists of five main sequential steps:
+## Flow Steps Overview
+
+**Step 1: Plan Selection**
+- Users choose from different insurance plan options (ExactCare, LuxuryCare, ExactCare Lite)
+- Each plan displays pricing ($112.00, $126.00, $38.00) and coverage details
+- Recommended plan is highlighted for user guidance
+
+**Step 2: Traveler Information Entry**
+- Primary traveler (policyholder) details collection
+- Required fields include: First name, Last name, Primary phone, Address lines, Postal code, City, State/Province
+- Date of birth and trip cost information
+- Email address with validation requirements
+- Option to add additional travelers
+
+**Step 3: Payment and Billing**
+- Card information input section
+- Fields for card number, expiration date, security code
+- Billing address confirmation with auto-population option
+- Address verification with postal code and city details
+
+**Step 4: Review Information**
+- Comprehensive review page showing all entered details
+- Plan summary with pricing information
+- Trip details verification
+- Traveler information confirmation
+- Included coverages display
+- Edit options available for each section
+
+**Step 5: Purchase Completion**
+- Final confirmation and payment processing
+- Policy generation and delivery
+
+This flow represents a typical e-commerce checkout process specifically designed for travel insurance, ensuring users can easily select coverage, provide necessary information, and complete their purchase with multiple review and edit opportunities throughout the journey
